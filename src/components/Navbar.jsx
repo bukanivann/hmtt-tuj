@@ -30,8 +30,10 @@ export default function Navbar({ activePage, onNavigate }) {
   }, []);
 
   const handleNavClick = (pageId, hash = '') => {
-    onNavigate(pageId, hash);
     setMobileMenuOpen(false);
+    setTimeout(() => {
+      onNavigate(pageId, hash);
+    }, 10);
   };
 
   return (
@@ -136,11 +138,11 @@ export default function Navbar({ activePage, onNavigate }) {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="lg:hidden overflow-hidden bg-[#0B0F19] border-b border-white/10 shadow-lg"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="lg:hidden absolute top-full left-0 right-0 z-50 bg-[#0B0F19] border-b border-white/15 shadow-2xl"
           >
             <div className="px-4 pt-2 pb-5 space-y-1.5">
               {NAV_ITEMS.map((item) => {
@@ -164,7 +166,7 @@ export default function Navbar({ activePage, onNavigate }) {
               <div className="pt-3">
                 <button
                   type="button"
-                  onClick={() => handleNavClick('regenerasi', 'form-oprec')}
+                  onClick={() => handleNavClick('regenerasi')}
                   className="w-full bg-[#1E4BBC] hover:bg-[#143896] text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-md shadow-[#1E4BBC]/20 transition-all flex items-center justify-center gap-2"
                 >
                   <span>Hubungi Kami</span>

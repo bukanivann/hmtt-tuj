@@ -46,10 +46,13 @@ export default function App() {
   }, [activeProkerDept]);
 
   const scrollToTarget = (pageId, targetHash = '') => {
+    const navbarOffset = 80;
+
     if (targetHash) {
       const hashEl = document.getElementById(targetHash);
-      if (hashEl) {
-        hashEl.scrollIntoView({ behavior: 'smooth' });
+      if (hashEl && hashEl.offsetParent !== null) {
+        const top = hashEl.getBoundingClientRect().top + window.scrollY - navbarOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
         return;
       }
     }
@@ -61,7 +64,8 @@ export default function App() {
 
     const sectionEl = document.getElementById(pageId);
     if (sectionEl) {
-      sectionEl.scrollIntoView({ behavior: 'smooth' });
+      const top = sectionEl.getBoundingClientRect().top + window.scrollY - navbarOffset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
